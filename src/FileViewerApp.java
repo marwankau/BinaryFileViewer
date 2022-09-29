@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -32,7 +34,7 @@ class FileViewerApp {
                 System.out.print("Enter file path: ");
                 line = scan.nextLine();
                 file = new File(line);
-            
+
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -55,9 +57,30 @@ class FileViewerApp {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
                 } catch (IOException e) {
-                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
                     continue;
                 }
+            } else if (line.equals("4")) {
+                try {
+                    RandomAccessFile raf = new RandomAccessFile(file,"rw");
+                    int i = 0;
+                    while (raf.getChannel().position() <  raf.length()) {
+                        if(i == 30){
+                            i=0;
+                            System.out.println();
+                        }
+                        System.out.printf("%s ",String.format("%02X", raf.read()));
+                        i++;
+                    }
+
+
+                    raf.close();
+                } catch (IOException e) {
+                    System.err.println("error");
+                }
+
+                
+
             }
         }
         scan.close();
