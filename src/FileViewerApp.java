@@ -1,17 +1,17 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import javax.swing.JFileChooser;
-
 class FileViewerApp {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         String line;
-        File file = null;
+
+        File file = new File("C:\\Users\\HP\\Desktop\\BinaryFileViewer\\images\\screen-capture.png");
 
         while (true) {
             System.out.println("\n------------------ Welcome to my Hex Editor ---------------\n");
@@ -30,9 +30,10 @@ class FileViewerApp {
                 break;
             } else if (line.equals("1")) {
                 System.out.print("Enter file path: ");
+
                 line = scan.nextLine();
                 file = new File(line);
-            
+
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -55,7 +56,8 @@ class FileViewerApp {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
                 } catch (IOException e) {
-                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
+                    System.out.println("h");
                     continue;
                 }
             }
