@@ -1,5 +1,7 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,10 +10,15 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 class FileViewerApp {
-    public static void main(String[] args) {
+    /**
+     * @param args
+     * @throws FileNotFoundException
+     */
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner scan = new Scanner(System.in);
         String line;
         File file = null;
+      
 
         while (true) {
             System.out.println("\n------------------ Welcome to my Hex Editor ---------------\n");
@@ -58,6 +65,36 @@ class FileViewerApp {
                     System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
                     continue;
                 }
+            }
+            else if(line.equals("4")){
+                int i=0;
+                FileInputStream fis = new FileInputStream(file);
+                BufferedInputStream bis = new BufferedInputStream(fis);
+                System.out.println("Read as Binary File "); 
+                BufferedReader br;
+                try {
+                    br = new BufferedReader(new FileReader(file));
+                    while ((bis.read()) != -1) {
+                      //  bis.read();
+                      String out=Integer.toHexString(bis.read());
+                    
+                        System.out.print(out+" " );
+                        if (i==16 ){
+                            System.out.println("");
+                            i=0;
+                     }   
+                     i++;
+                    }
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                 catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             }
         }
         scan.close();
