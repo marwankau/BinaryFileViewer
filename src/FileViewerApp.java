@@ -32,7 +32,26 @@ class FileViewerApp {
                 System.out.print("Enter file path: ");
                 line = scan.nextLine();
                 file = new File(line);
-            
+                if (line.equals("4")) {
+
+                          try {  
+                                 while ((line = dis.readLine()) != null) {
+
+                                    FileInputStream fis = new FileInputStream(file);
+                                    GZIPInputStream gzip = new GZIPInputStream(fis);
+
+                                        byte[] bytes = new byte[20];
+
+                                           din.read(bytes, 0, 2);
+
+                                  for (byte b : bytes) {
+                                  String str  = Integer.toHexString(b);
+                                 System.out.print(str);}
+                                 
+                    }
+}
+
+                }
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -63,3 +82,4 @@ class FileViewerApp {
         scan.close();
     }
 }
+
