@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -32,7 +35,7 @@ class FileViewerApp {
                 System.out.print("Enter file path: ");
                 line = scan.nextLine();
                 file = new File(line);
-            
+
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -55,9 +58,45 @@ class FileViewerApp {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
                 } catch (IOException e) {
-                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
                     continue;
                 }
+            } else if (line.equals("4")) {
+                int counter = 0;
+                try {
+                    RandomAccessFile raf = new RandomAccessFile(file, "r");
+
+                    byte[] array = new byte[((int) raf.length())];
+
+                    // read and insert it into array
+                    while (true) {
+                        array[counter] = raf.readByte();
+                        counter++;
+                        if (raf.read() == -1) {
+                            break;
+                        }
+                    }
+
+                    // read from byte to hexadecimal
+                    for (int i = 0; i < array.length; i++) {
+
+                        System.out.printf("%x ", (array[i]));
+
+                        // specify number character in each line
+                        if (i % 4 == 0) {
+                            System.out.println();
+                        }
+
+                    }
+
+                    raf.close();
+                } catch (FileNotFoundException e) {
+                    System.out.println("Make sure file path is correct");
+                }
+
+                catch (IOException e) {
+                }
+
             }
         }
         scan.close();
