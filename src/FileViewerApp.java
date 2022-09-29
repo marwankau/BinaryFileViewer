@@ -1,14 +1,17 @@
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
-class FileViewerApp {
-    public static void main(String[] args) {
+public class FileViewerApp {
+    
+    public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         String line;
         File file = null;
@@ -59,7 +62,33 @@ class FileViewerApp {
                     continue;
                 }
             }
+
+            else if (line.equals("4"))   {
+                RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                
+                while (true) {
+                    try {
+
+                       Byte b =  raf.readByte() ;
+                       String x =  String.format("%x", b);
+                       System.out.print(x + " ");
+                       
+                        
+                    } catch (EOFException ignored) {
+                        break;
+                    }
+                }
+
+
+
+            }
+
+            
+
+            
         }
         scan.close();
     }
 }
+
+
