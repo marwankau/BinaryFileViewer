@@ -6,3 +6,7 @@ The aim of this app to open text file and binary files. For text files it just d
 
 ## Your Task
 Complete Java code to implements reading any file as binary file by showing each byte as hexadecimal on command line. Each byte converted to hexadecimal and its neighbor should sperated from each other by one space. As shown in the above image.
+
+## Screen Capture
+
+![Screen Capture](/images/screen-capture.png)
