@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -59,37 +61,39 @@ class FileViewerApp {
                     continue;
                 }
             }
-            
-                           else if (line.equals("4")) {
-               
-                try{
-                RandomAccessFile  raf = new RandomAccessFile(file);
-                long len = raf.length;
-                int i = 0;
-                int j = 0;
-                for (int i = 0; i < len; i++){
-                if( j == 10){
-                    j = 0;
-                    System.out.println();
-                }
-                    String.formate("3%x", raf.read());
-                }
+        
+            else if (line.equals("4")) {
+                try {
+                RandomAccessFile raf = new RandomAccessFile(file,"rw");
+                  
 
-                
-                 i++;
-                j++;
-           } 
-            
-               catch (FileNotFoundException e) {
-                        System.err.println("Make sure the file you typed is exist!");
-                        continue;
-                    }
-                catch (IOException e) {
-                        System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
-                        continue;
+                   int i = 0;
+                    while(i < raf.length()){
+
+                    String string =  String.format("%5x",  raf.readByte());
+                    System.out.print(string + " ");
+                    
+                    i++;
                     }
 
+                    
+                } catch (EOFException e) {
+                        break;
+
+                 }
+                 catch (IOException e) {
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    continue;
+                }
+
+    
         }
-        scan.close();
+            
+        
+       
+       
     }
+        scan.close();
+  }   
+ 
 }
