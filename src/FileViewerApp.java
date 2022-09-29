@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-
+import java.io.FileInputStream;
 import javax.swing.JFileChooser;
 
 class FileViewerApp {
@@ -12,6 +12,8 @@ class FileViewerApp {
         Scanner scan = new Scanner(System.in);
         String line;
         File file = null;
+        
+        
 
         while (true) {
             System.out.println("\n------------------ Welcome to my Hex Editor ---------------\n");
@@ -50,7 +52,7 @@ class FileViewerApp {
 
                     System.out.println("\n--------- end of file contents ---------");
 
-                    br.close();
+                    br.close(); 
                 } catch (FileNotFoundException e) {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
@@ -59,7 +61,21 @@ class FileViewerApp {
                     continue;
                 }
             }
+            else if (line.equals("4")) {
+                System.out.printf("\n\nReading (%s) as Binary File\n\n", file.getName());
+                try{    
+                    FileInputStream fin=new FileInputStream(file);    
+                    int i=0;    
+                    while((i=fin.read())!=-1){    
+                     System.out.printf("%02x",125);    
+                    }    
+                    fin.close();    
+                  }catch(Exception e){System.out.println(e);}    
+                 }   
+                  
+    
         }
+        
         scan.close();
     }
 }
