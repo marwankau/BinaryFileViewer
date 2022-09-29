@@ -1,8 +1,14 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -51,6 +57,39 @@ class FileViewerApp {
                     System.out.println("\n--------- end of file contents ---------");
 
                     br.close();
+                } catch (FileNotFoundException e) {
+                    System.err.println("Make sure the file you typed is exist!");
+                    continue;
+                } catch (IOException e) {
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    continue;
+                }
+            }
+
+            else if (line.equals("4")) {
+                System.out.printf("\n\nReading (%s) as Text File\n\n", file.getName());
+                try {
+
+                    FileInputStream fis = new FileInputStream(file);
+                    DataInputStream dis = new DataInputStream(fis);
+                    
+                    
+                    while (true) {
+                        try {
+
+                           String ss =  String.format("%x",fis.read() );
+                           System.out.print(ss+" ");
+
+                           
+                        } catch (EOFException ignored) {
+                            break;
+                        }
+
+                    }
+
+                    System.out.println("\n--------- end of file contents ---------");
+
+                   
                 } catch (FileNotFoundException e) {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
