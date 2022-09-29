@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -46,7 +48,8 @@ class FileViewerApp {
 
                     while ((line = br.readLine()) != null) {
                         System.out.println(line);
-                    }
+                    } 
+
 
                     System.out.println("\n--------- end of file contents ---------");
 
@@ -58,6 +61,28 @@ class FileViewerApp {
                     System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
                     continue;
                 }
+            } else if (line.equals("4")) {
+                System.out.printf("\n\nReading (%s) as Binary File\n\n", file.getName());
+              try{
+                FileInputStream fis = new FileInputStream(file);
+                DataInputStream dis = new DataInputStream(fis);
+                String str = "";
+                byte buf[] = new byte[50]; 
+                while (dis.available() > 0) {
+                 dis.read(buf);
+                }
+                for (int i = 0; i < buf.length ; i++) {
+                String hexa = Integer.toHexString(buf[i]);  
+                System.out.print(hexa + " ");
+
+            }
+            } catch (FileNotFoundException e) {
+                System.err.println(" error");
+              } catch (IOException e) {
+                System.err.println(" error");
+
+              }
+                
             }
         }
         scan.close();
