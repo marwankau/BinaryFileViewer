@@ -69,7 +69,6 @@ class FileViewerApp {
                     byte[] buff = new byte[(int) dis.available()];
                     dis.read(buff);
                     for (Byte b : buff) {
-
                         System.out.printf("%x ", b);
                     }
                     System.out.println();
