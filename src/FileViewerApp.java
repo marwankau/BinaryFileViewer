@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 class FileViewerApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         String line;
         File file = null;
@@ -59,7 +60,34 @@ class FileViewerApp {
                     continue;
                 }
             }
+            
+            else if(line.equals("4")){
+                FileInputStream fis = new FileInputStream(file);
+                byte [] buff = new byte[500];
+
+                int number_of_read_bytes = 0;
+
+                while(fis.available() > 0){
+                    number_of_read_bytes = fis.read(buff);
+                    System.out.println(byte2hex(buff));
+                    
+                }
+            }
         }
         scan.close();
+    }
+
+    private static String byte2hex ( byte [] buff){
+        String string = "";
+
+        for(int i = 0; i < buff.length; i++){
+            string += Integer.toHexString(buff[i]);
+            
+
+        }
+
+        
+
+        return string;
     }
 }
