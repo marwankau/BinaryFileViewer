@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -58,8 +61,31 @@ class FileViewerApp {
                     System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
                     continue;
                 }
-            }
+            }else if (line.equals("4")) {
+               
+                    System.out.printf("\n\nReading (%s) as Binary File\n\n", file.getName());
+                    try {
+                       RandomAccessFile fre = new RandomAccessFile(file,"rw");
+                        long pos = fre.getChannel().position();
+                        
+                        while (pos < fre.length()) {
+                            Byte B =fre.readByte();
+                            String format = String.format("%x", B);
+                            System.out.print(format+" ");
+                        }
+                        System.out.println("\n--------- end of file contents ---------");
+
+                        
+                        
+                        fre.close();
+                       
+                   
+                    } catch (IOException ignored) {
+                        break;
+                      
+                    }
         }
-        scan.close();
+        //scan.close();
     }
+}
 }
