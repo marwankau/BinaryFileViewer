@@ -59,6 +59,36 @@ class FileViewerApp {
                     continue;
                 }
             }
+            
+                           else if (line.equals("4")) {
+               
+                try{
+                RandomAccessFile  raf = new RandomAccessFile(file);
+                long len = raf.length;
+                int i = 0;
+                int j = 0;
+                for (int i = 0; i < len; i++){
+                if( j == 10){
+                    j = 0;
+                    System.out.println();
+                }
+                    String.formate("3%x", raf.read());
+                }
+
+                
+                 i++;
+                j++;
+           } 
+            
+               catch (FileNotFoundException e) {
+                        System.err.println("Make sure the file you typed is exist!");
+                        continue;
+                    }
+                catch (IOException e) {
+                        System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                        continue;
+                    }
+
         }
         scan.close();
     }
