@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.swing.JFileChooser;
 
@@ -59,6 +60,7 @@ class FileViewerApp {
                 } catch (IOException e) {
                     System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
                     continue;
+                } 
                 } else if (line.equals("4")) {
                 System.out.printf("\n\nReading (%s) as Binary File\n\n", file.getName());
                 try {
