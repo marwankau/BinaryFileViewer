@@ -15,7 +15,9 @@ class FileViewerApp {
 
         while (true) {
             System.out.println("\n------------------ Welcome to my Hex Editor ---------------\n");
+            System.out.println("h");
 
+            System.out.println("Hello");
             System.out.println("1. Choose file by typing path");
             System.out.println("2. Choose file by file chooser");
             System.out.println("3. Read as Text File");
