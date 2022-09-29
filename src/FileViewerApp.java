@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,7 +35,7 @@ class FileViewerApp {
                 System.out.print("Enter file path: ");
                 line = scan.nextLine();
                 file = new File(line);
-            
+
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -55,11 +58,37 @@ class FileViewerApp {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
                 } catch (IOException e) {
-                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
+                    continue;
+                }
+            } else if (line.equals("4")) {
+                System.out.printf("\n\nReading (%s) as binary File\n\n", file.getName());
+                try {
+                    FileInputStream fis = new FileInputStream(file);
+                    DataInputStream dis = new DataInputStream(fis);
+                    byte[] buff = new byte[(int) dis.available()];
+                    dis.read(buff);
+                    for (Byte b : buff) {
+
+                        System.out.printf("%x ", b);
+                    }
+                    System.out.println();
+                    System.out.println("\n--------- end of file contents ---------");
+                    dis.close();
+
+                } catch (EOFException ignored) {
+                    break;
+                } catch (FileNotFoundException e) {
+                    System.err.println("Make sure the file you typed is exist!");
+                    continue;
+                } catch (IOException e) {
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
                     continue;
                 }
             }
         }
-        scan.close();
+
+        // scan.close();
     }
+
 }
