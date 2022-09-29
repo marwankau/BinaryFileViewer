@@ -1,18 +1,25 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
 class FileViewerApp {
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         String line;
         File file = null;
-
+        
         while (true) {
             System.out.println("\n------------------ Welcome to my Hex Editor ---------------\n");
 
@@ -58,8 +65,36 @@ class FileViewerApp {
                     System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
                     continue;
                 }
-            }
-        }
+            } else if (line.equals("4")) {
+                System.out.printf("\n\nReading (%s) as binary File\n\n", file.getName());
+                FileInputStream fis = new FileInputStream("/Users/2035998/Pictures/Camera Roll");
+                DataInputStream dis = new DataInputStream(fis);
+        
+                while (true) {
+                    try {
+                        byte[] buff = new byte[150];
+                        dis.read(buff);
+                        
+                        String str = "";
+                        for (int i = 0; i < buff.length; i++) {
+                            if (buff[i] == 0) break;
+                            str += (char) buff[i];
+                        }
+                       return str;
+                    } catch (EOFException ignored) {
+                        break;
+                    }
+                 
+                }
+                dis.close();
+
+                  
+        
+    }
+ 
         scan.close();
+    }  
     }
 }
+
+
