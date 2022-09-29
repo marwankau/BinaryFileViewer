@@ -83,7 +83,7 @@ class FileViewerApp {
                     int byt;
                     while ((byt = stream_reader.read()) != -1) {
                     
-                        System.out.println(Integer.toHexString(byt));
+                        System.out.print(Integer.toHexString(byt));
                     }
         
                     stream_reader.close();
