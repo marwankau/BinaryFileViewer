@@ -7,13 +7,12 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 import javax.swing.JFileChooser;
 
+//yousef Samir eshky 1849552
 class FileViewerApp {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         String line;
         File file = null;
-        
-        
 
         while (true) {
             System.out.println("\n------------------ Welcome to my Hex Editor ---------------\n");
@@ -34,7 +33,7 @@ class FileViewerApp {
                 System.out.print("Enter file path: ");
                 line = scan.nextLine();
                 file = new File(line);
-            
+
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -52,30 +51,30 @@ class FileViewerApp {
 
                     System.out.println("\n--------- end of file contents ---------");
 
-                    br.close(); 
+                    br.close();
                 } catch (FileNotFoundException e) {
                     System.err.println("Make sure the file you typed is exist!");
                     continue;
                 } catch (IOException e) {
-                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
                     continue;
                 }
-            }
-            else if (line.equals("4")) {
+            } else if (line.equals("4")) {
                 System.out.printf("\n\nReading (%s) as Binary File\n\n", file.getName());
-                try{    
-                    FileInputStream fin=new FileInputStream(file);    
-                    int i=0;    
-                    while((i=fin.read())!=-1){    
-                     System.out.printf("%02x",125);    
-                    }    
-                    fin.close();    
-                  }catch(Exception e){System.out.println(e);}    
-                 }   
-                  
-    
+                try {
+                    FileInputStream fin = new FileInputStream(file);
+
+                    while ((i = fin.read()) != -1) {
+                        System.out.printf("%02x", 125);
+                    }
+                    fin.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
         }
-        
+
         scan.close();
     }
 }
