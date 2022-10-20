@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -59,7 +62,34 @@ class FileViewerApp {
                     continue;
                 }
             }
+            else if (line.equals("4")){
+
+            }
+            System.out.printf("\n\nReading (%s) as binary File\n\n", file.getName());
+                try {
+                FileInputStream fis = new FileInputStream(file);
+                DataInputStream dis = new DataInputStream(fis);
+
+                while (dis.read() != -1) {
+                System.out.printf("%x ", dis.read());
+
+                }
+                System.out.println();
+                System.out.println("\n--------- end of file contents ---------");
+                dis.close();
+
+                } catch (EOFException ignored) {
+                break;
+                } catch (FileNotFoundException e) {
+                System.err.println("Make sure the file you typed is exist!");
+                continue;
+                } catch (IOException e) {
+                System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage());
+                continue;
+                }
+                }
+
+              scan.close();  
         }
-        scan.close();
+        
     }
-}
