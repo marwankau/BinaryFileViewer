@@ -59,7 +59,54 @@ class FileViewerApp {
                     continue;
                 }
             }
-        }
-        scan.close();
+            else if (line.equals("4")){
+                try{
+        StringBuilder result = new StringBuilder();
+        StringBuilder hex = new StringBuilder();
+        StringBuilder input = new StringBuilder();
+
+        int count = 0;
+        int value;
+
+        // path to inputstream....
+        try (InputStream inputStream = Files.newInputStream(file)) {
+
+            while ((value = inputStream.read()) != -1) {
+
+                hex.append(String.format("%02X ", value));
+                if (!Character.isISOControl(value)) {
+                    input.append((char) value);
+                } else {
+                    input.append(UNKNOWN_CHARACTER);
+                }
+
+                // After 15 bytes, reset everything for formatting purpose
+                if (count == 14) {
+                    result.append(String.format("%-60s | %s%n", hex, input));
+                    hex.setLength(0);
+                    input.setLength(0);
+                    count = 0;
+                } else {
+                    count++;} 
+            }
+              if (count > 0) {
+                result.append(String.format("%-60s | %s%n", hex, input));
+            }
+            }
+           
+             System.out.println(result.tostring());
+
+                }  catch (FileNotFoundException e) {
+                    System.err.println("Make sure the file you typed is exist!");
+                    continue;
+                } catch (IOException e) {
+                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
+                    continue;
+                }
+            }
+           
+            }//while
+             scan.close();
+        }//main
+       
     }
-}
