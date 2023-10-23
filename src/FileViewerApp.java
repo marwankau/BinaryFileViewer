@@ -1,8 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -32,7 +28,6 @@ class FileViewerApp {
                 System.out.print("Enter file path: ");
                 line = scan.nextLine();
                 file = new File(line);
-            
             } else if (line.equals("2")) {
                 JFileChooser chooser = new JFileChooser();
                 int btn = chooser.showOpenDialog(null);
@@ -40,6 +35,7 @@ class FileViewerApp {
                     file = chooser.getSelectedFile();
                 }
             } else if (line.equals("3")) {
+                assert file != null;
                 System.out.printf("\n\nReading (%s) as Text File\n\n", file.getName());
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(file));
@@ -53,10 +49,30 @@ class FileViewerApp {
                     br.close();
                 } catch (FileNotFoundException e) {
                     System.err.println("Make sure the file you typed is exist!");
-                    continue;
                 } catch (IOException e) {
-                    System.err.println("Somethign went wrong!, Here the error message: " + e.getMessage() );
-                    continue;
+                    System.err.println("Something went wrong!, Here the error message: " + e.getMessage() );
+                }
+            } else if (line.equals("4")) {
+                assert file != null;
+                System.out.printf("\n\nReading (%s) as Binary File\n\n", file.getName());
+                try {
+                    FileInputStream fis = new FileInputStream(file);
+
+                    long len = file.length(), i = 0;
+                    while (i < len) {
+                        System.out.printf("%02X ", fis.read());
+
+                        i++;
+                        if (i % 20 == 0) System.out.println();
+                    }
+
+                    System.out.println("\n--------- end of file contents ---------");
+
+                    fis.close();
+                } catch (FileNotFoundException e) {
+                    System.err.println("Make sure the file you typed is exist!");
+                } catch (IOException e) {
+                    System.err.println("Something went wrong!, Here the error message: " + e.getMessage() );
                 }
             }
         }
